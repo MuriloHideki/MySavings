@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutIncomes"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editAmountTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:hint="Value" />
+
+    <EditText
+        android:id="@+id/editTextIncomeDescription"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:hint="Description" />
+
+    <Spinner
+        android:id="@+id/spinnerPriority"
+        android:layout_width="276dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:prompt="@string/register_type_prompt" />
+
+    <Button
+        android:id="@+id/buttonAddIncome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="+" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewIncomes"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

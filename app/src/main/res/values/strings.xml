@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MySavings</string>
+    <string name="register_type_prompt">Transaction Type</string>
+    <string-array name="register_types">
+        <item>Income</item>
+        <item>Expense</item>
+    </string-array>
+</resources>
