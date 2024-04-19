@@ -16,6 +16,11 @@
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,5 +31,6 @@
             android:exported="true">
         </activity>
     </application>
-
+    <uses-feature android:name="android.hardware.camera"  android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>

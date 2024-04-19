@@ -6,22 +6,33 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/foto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update profile picture" />
     <EditText
         android:id="@+id/editAmountTransaction"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:hint="Value" />
 
     <EditText
         android:id="@+id/editTextIncomeDescription"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:hint="Description" />
 
     <Spinner
         android:id="@+id/spinnerPriority"
-        android:layout_width="276dp"
-        android:layout_height="51dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:prompt="@string/register_type_prompt" />
 
@@ -38,4 +49,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/buttonSendTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Send Transaction List" />
 </LinearLayout>
