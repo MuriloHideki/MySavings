@@ -8,7 +8,7 @@
         android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Usuário"
+        android:hint="User"
         android:inputType="text" />
 
     <EditText
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextUsername"
-        android:hint="Senha"
+        android:hint="Password"
         android:inputType="textPassword" />
 
     <Button
@@ -27,4 +27,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:text="Login" />
+
+    <TextView
+        android:id="@+id/textViewClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
+        android:textColor="@android:color/black" />
 </RelativeLayout>
