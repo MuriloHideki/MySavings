@@ -11,7 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.mysavings.model.Transaction;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textViewClock;
 
     private ClockTask clockTask;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,30 +42,33 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewClock = findViewById(R.id.textViewClock);
 
+        mAuth = FirebaseAuth.getInstance();
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = editTextUsername.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
-
-                if (authenticate(username, password)) {
-                    // Autenticação bem-sucedida, abra a próxima Activity
-                    //Intent Explicita
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish(); // Fecha a LoginActivity para não voltar quando pressionar o botão "Voltar"
-                } else {
-                    // Autenticação falhou, exibe uma mensagem de erro
-                    Toast.makeText(LoginActivity.this, "Usuário ou senha inválidos", Toast.LENGTH_SHORT).show();
-                }
+                loginUser();
             }
         });
 
         startClock();
     }
 
-    private boolean authenticate(String username, String password) {
-        return !username.isEmpty() && !password.isEmpty();
+    private void loginUser() {
+        String email = editTextUsername.getText().toString();
+        String password = editTextPassword.getText().toString();
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Email or Password incorrect.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void startClock() {

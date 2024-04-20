@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "222457735709",
+    "project_id": "mysavings-222d3",
+    "storage_bucket": "mysavings-222d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:222457735709:android:5c5d4916a8a7c2146b34f4",
+        "android_client_info": {
+          "package_name": "com.example.mysavings"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxPjnbPRUF0fxVX5U8qASWDMJrzYf70wY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
