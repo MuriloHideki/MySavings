@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update profile picture" />
+
     <EditText
         android:id="@+id/editAmountTransaction"
         android:layout_width="match_parent"
@@ -47,8 +48,8 @@
         android:id="@+id/recyclerViewIncomes"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/buttonSendTransactions"
@@ -56,4 +57,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Send Transaction List" />
+
 </LinearLayout>

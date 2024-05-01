@@ -1,7 +1,9 @@
 package com.example.mysavings;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,6 +28,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mysavings.helper.TransactionDbHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import com.example.mysavings.model.Transaction;
 
 import java.util.ArrayList;
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private TransactionAdapter transactionAdapter;
     private ImageView imageView;
     private List<Transaction> transactions = new ArrayList<>();
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         buttonSendTransactions = findViewById(R.id.buttonSendTransactions);
         imageView = findViewById(R.id.imageView);
         buttonFoto = findViewById(R.id.foto);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("transactions");
 
         recyclerViewTransactions.setLayoutManager(new LinearLayoutManager(this));
         transactionAdapter = new TransactionAdapter(transactions);
@@ -87,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
                     transactions.add(transaction);
                     transactionAdapter.notifyDataSetChanged();
 
+                    String taskId = databaseReference.push().getKey();
+                    databaseReference.child(taskId).setValue(transaction);
+
+                    TransactionDbHelper dbHelper = new TransactionDbHelper(MainActivity.this);
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                    ContentValues values = new ContentValues();
+                    values.put("description", transaction.getDescription());
+                    values.put("type", transaction.getType());
+                    values.put("value", transaction.getValue());
+
+                    db.insert("tasks", null, values);
+
                     TransactionEditAmount.setText("");
                     TransactionEditTextDescription.setText("");
                 } else {
@@ -112,6 +138,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 sendTasksByEmail();
+            }
+        });
+    }
+
+    protected void onStart() {
+        super.onStart();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                transactions.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Transaction tansaction = postSnapshot.getValue(Transaction.class);
+                    transactions.add(tansaction);
+                }
+                transactionAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
