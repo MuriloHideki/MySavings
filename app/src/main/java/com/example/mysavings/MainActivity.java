@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinnerPriority;
     private Button transactionAddButtonAdd;
     private Button buttonSendTransactions;
+    private Button buttonViewBalance;
     private RecyclerView recyclerViewTransactions;
     private LinearLayout linearLayoutIncomes;
     private Button buttonFoto;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private List<Transaction> transactions = new ArrayList<>();
     private DatabaseReference databaseReference;
+    private TextView balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +69,10 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutIncomes = findViewById(R.id.linearLayoutIncomes);
         recyclerViewTransactions = findViewById(R.id.recyclerViewIncomes);
         buttonSendTransactions = findViewById(R.id.buttonSendTransactions);
+        buttonViewBalance = findViewById(R.id.buttonViewBalance);
         imageView = findViewById(R.id.imageView);
         buttonFoto = findViewById(R.id.foto);
+        balance = findViewById(R.id.textBalance);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("transactions");
@@ -134,10 +138,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonSendTransactions.setOnClickListener(new View.OnClickListener(){
+        buttonViewBalance.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                sendTasksByEmail();
+                Intent intent = new Intent(view.getContext(), BalanceActivity.class);
+                view.getContext().startActivity(intent);
             }
         });
     }
@@ -148,10 +153,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 transactions.clear();
-
+                double balanceAux = 0;
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Transaction tansaction = postSnapshot.getValue(Transaction.class);
-                    transactions.add(tansaction);
+                    Transaction transaction = postSnapshot.getValue(Transaction.class);
+
+                    if(transaction.getType().equals("Income")){
+                        balanceAux += transaction.getValue();
+                    }else {
+                        balanceAux -= transaction.getValue();
+                    }
+
+                    balance.setText("Balance: " + String.format("%.2f", balanceAux));
+
+                    transactions.add(transaction);
                 }
                 transactionAdapter.notifyDataSetChanged();
             }
@@ -308,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
                 textViewPriority = itemView.findViewById(R.id.textViewPriority);
                 textViewDescription = itemView.findViewById(R.id.textViewDescription);
                 textViewValue = itemView.findViewById(R.id.textViewValue);
-//                checkBoxCompleted = itemView.findViewById(R.id.checkBoxCompleted);
             }
 
             // Método que associa os dados da tarefa aos elementos de interface do item de tarefa
