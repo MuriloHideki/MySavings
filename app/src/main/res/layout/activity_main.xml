@@ -26,16 +26,25 @@
         android:text="Update profile picture" />
 
     <EditText
+        android:id="@+id/editTextIncomeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <EditText
         android:id="@+id/editAmountTransaction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Value" />
 
     <EditText
-        android:id="@+id/editTextIncomeDescription"
+        android:id="@+id/editTransactionDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Description" />
+        android:ems="10"
+        android:focusable="false"
+        android:hint="Select Date"
+        android:onClick="showDatePickerDialog" />
 
     <Spinner
         android:id="@+id/spinnerPriority"
@@ -55,13 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+" />
-
-        <Button
-            android:id="@+id/buttonViewBalance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
 
     </LinearLayout>
 
