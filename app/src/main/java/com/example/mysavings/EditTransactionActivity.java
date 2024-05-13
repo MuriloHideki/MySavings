@@ -12,6 +12,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditTransactionActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextValue;
@@ -28,7 +31,6 @@ public class EditTransactionActivity extends AppCompatActivity {
 
         String transactionId = getIntent().getStringExtra("transactionId");
         databaseReference = FirebaseDatabase.getInstance().getReference("transactions");
-
         editTextName.setText(getIntent().getStringExtra("name"));
         editTextValue.setText(String.valueOf(getIntent().getDoubleExtra("value", 0)));
 
@@ -45,7 +47,12 @@ public class EditTransactionActivity extends AppCompatActivity {
         double value = Double.parseDouble(editTextValue.getText().toString());
 
         DatabaseReference transactionRef = databaseReference.child(transactionId);
-        transactionRef.child("name").setValue(name, new DatabaseReference.CompletionListener() {
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("name", name);
+        updates.put("value", value);
+
+        transactionRef.updateChildren(updates, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                 if (databaseError == null) {
@@ -56,7 +63,8 @@ public class EditTransactionActivity extends AppCompatActivity {
                 }
             }
         });
-        transactionRef.child("value").setValue(value);
     }
+
+
 
 }

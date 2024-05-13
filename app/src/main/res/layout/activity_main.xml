@@ -6,13 +6,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textBalance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Balance: 0" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -61,11 +54,21 @@
 
         <Button
             android:id="@+id/buttonAddIncome"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="+" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textBalance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Balance: 0"
+        android:layout_marginLeft="350px"
+        android:textSize="60px"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewIncomes"

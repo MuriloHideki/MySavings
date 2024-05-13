@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -308,7 +309,6 @@ public class MainActivity extends AppCompatActivity {
             private TextView textViewPriority;
             private TextView textViewValue;
             private TextView textViewDate;
-
             public TransactionViewHolder(@NonNull View itemView) {
                 super(itemView);
                 textViewPriority = itemView.findViewById(R.id.textViewPriority);
@@ -320,7 +320,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION && listener != null) {
-                            listener.onTransactionClick(transactions.get(position));
                             Transaction transaction = transactions.get(position);
                             MainActivity.this.onEditTransactionClicked(transaction);
                         }
